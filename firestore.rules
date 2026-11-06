@@ -1,13 +1,60 @@
 rules_version = '2';
 
-// VERSIÓN 1: cada persona (identificada con login anónimo) solo puede
-// leer, crear, modificar y borrar SUS propias reservas.
+// REGLAS DE SEGURIDAD DE FIRESTORE
+// Idea general: cada visitante (identificado con login anónimo) solo puede
+// ver y manejar SUS propias reservas. Nadie puede leer las de otra persona.
+// Estas reglas se publican desde Firebase Console > Firestore > Reglas
+// (Vercel NO las actualiza solo).
 service cloud.firestore {
   match /databases/{database}/documents {
+
     match /reservas/{reservaId} {
-      allow read: if request.auth != null && resource.data.uid == request.auth.uid;
-      allow create: if request.auth != null && request.resource.data.uid == request.auth.uid;
-      allow update, delete: if request.auth != null && resource.data.uid == request.auth.uid;
+
+      // Leer: solo si la reserva es tuya.
+      allow read: if request.auth != null
+        && resource.data.uid == request.auth.uid;
+
+      // Crear: tiene que quedar a tu nombre, "pendiente", con un servicio
+      // válido y con los datos mínimos cargados.
+      allow create: if request.auth != null
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.estado == 'pendiente'
+        && request.resource.data.servicio in ['adaptacion', 'guarderia', 'hospedaje', 'colonia']
+        && request.resource.data.perro.nombre is string
+        && request.resource.data.perro.nombre.size() > 0
+        && request.resource.data.perro.nombre.size() <= 60
+        && request.resource.data.contacto.telefono is string
+        && request.resource.data.contacto.telefono.size() >= 8
+        && request.resource.data.observaciones.size() <= 500
+        && request.resource.data.medicacion.size() <= 500;
+
+      // Modificar: solo tus reservas, y solo se pueden tocar estas
+      // 3 cosas. Una reserva "confirmada" por La Reserva ya no se puede
+      // cambiar desde la app (hay que contactarlos).
+      allow update: if request.auth != null
+        && resource.data.uid == request.auth.uid
+        && request.resource.data.diff(resource.data).affectedKeys()
+             .hasOnly(['estado', 'observaciones', 'medicacion'])
+        && request.resource.data.estado in ['pendiente', 'cancelada']
+        && request.resource.data.observaciones.size() <= 500
+        && request.resource.data.medicacion.size() <= 500;
+
+      // Eliminar: solo tus reservas que no estén confirmadas.
+      allow delete: if request.auth != null
+        && resource.data.uid == request.auth.uid
+        && resource.data.estado in ['pendiente', 'cancelada'];
+
+      // Documentos adjuntos: solo el dueño de la reserva.
+      match /documentos/{documentoId} {
+        allow read, delete: if request.auth != null
+          && get(/databases/$(database)/documents/reservas/$(reservaId)).data.uid == request.auth.uid;
+
+        allow create: if request.auth != null
+          && get(/databases/$(database)/documents/reservas/$(reservaId)).data.uid == request.auth.uid
+          && request.resource.data.tipo in ['libreta', 'otro']
+          && request.resource.data.dataUrl is string
+          && request.resource.data.dataUrl.size() < 1000000;
+      }
     }
   }
 }

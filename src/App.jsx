@@ -1,82 +1,119 @@
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import Aviso from './components/Aviso'
+import MisReservas from './components/MisReservas'
+import ReservaWizard from './components/ReservaWizard'
+import ServiciosVista from './components/ServiciosVista'
 import { configOk } from './firebase'
 import { useAuth } from './hooks/useAuth'
 import { useReservas } from './hooks/useReservas'
-import { cambiarEstado, crearReserva, eliminarReserva } from './services/reservas'
-
-const SERVICIOS = [
-  { id: 'guarderia', nombre: 'Guardería canina' },
-  { id: 'hospedaje', nombre: 'Hospedaje canino' },
-  { id: 'colonia', nombre: 'Colonia canina' },
-]
+import { mensajeDeError } from './utils/errores'
 
 export default function App() {
   const { uid, cargando: autenticando, error: errorAuth } = useAuth()
   const { reservas, cargando, error } = useReservas(uid)
 
-  const [servicio, setServicio] = useState('guarderia')
-  const [perro, setPerro] = useState('')
-  const [fecha, setFecha] = useState('')
-  const [mensaje, setMensaje] = useState('')
+  const [vista, setVista] = useState('servicios') // 'servicios' | 'reservar' | 'mis-reservas'
+  const [servicioElegido, setServicioElegido] = useState('')
+  const [intento, setIntento] = useState(0) // cambia para reiniciar el formulario
+  const [aviso, setAviso] = useState(null)
 
-  if (!configOk) return <p>Faltan las variables de entorno de Firebase (.env).</p>
-  if (autenticando) return <p>Cargando...</p>
-  if (errorAuth) return <p>No se pudo iniciar sesión: {errorAuth.message}</p>
+  const notificar = useCallback((tipo, texto) => setAviso({ tipo, texto }), [])
 
-  async function enviar(e) {
-    e.preventDefault()
-    if (!perro.trim() || !fecha) {
-      setMensaje('Completá el nombre del perro y la fecha.')
-      return
-    }
-    try {
-      await crearReserva(uid, { servicio, perro: perro.trim(), fecha })
-      setPerro('')
-      setFecha('')
-      setMensaje('Reserva guardada ✔')
-    } catch (err) {
-      setMensaje('Error al guardar: ' + err.message)
-    }
+  // El aviso se cierra solo a los 5 segundos.
+  useEffect(() => {
+    if (!aviso) return undefined
+    const t = setTimeout(() => setAviso(null), 5000)
+    return () => clearTimeout(t)
+  }, [aviso])
+
+  function empezarReserva(servicio = '') {
+    setServicioElegido(servicio)
+    setIntento((n) => n + 1)
+    setVista('reservar')
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  async function accion(fn) {
-    try {
-      await fn()
-    } catch (err) {
-      setMensaje('Error: ' + err.message)
-    }
+  if (!configOk) {
+    return (
+      <main className="contenedor">
+        <div className="tarjeta">
+          <h1>Falta configurar Firebase</h1>
+          <p>
+            No se encontraron las variables de entorno. Copiá <code>.env.example</code> como <code>.env</code>, completá
+            los valores de tu proyecto y reiniciá <code>npm run dev</code>.
+          </p>
+        </div>
+      </main>
+    )
+  }
+
+  if (errorAuth) {
+    return (
+      <main className="contenedor">
+        <div className="tarjeta">
+          <h1>No pudimos iniciar la sesión</h1>
+          <p>{mensajeDeError(errorAuth)}</p>
+        </div>
+      </main>
+    )
+  }
+
+  if (autenticando) {
+    return (
+      <main className="contenedor">
+        <p className="estado-carga" role="status">Conectando…</p>
+      </main>
+    )
   }
 
   return (
-    <main>
-      <h1>La Reserva</h1>
-      <h2>Nueva reserva</h2>
-      <form onSubmit={enviar}>
-        <select value={servicio} onChange={(e) => setServicio(e.target.value)}>
-          {SERVICIOS.map((s) => (
-            <option key={s.id} value={s.id}>{s.nombre}</option>
-          ))}
-        </select>
-        <input placeholder="Nombre del perro" value={perro} onChange={(e) => setPerro(e.target.value)} />
-        <input type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} />
-        <button type="submit">Reservar</button>
-      </form>
-      {mensaje && <p>{mensaje}</p>}
+    <>
+      <header className="cabecera">
+        <div className="contenedor cabecera-interior">
+          <button type="button" className="marca" onClick={() => setVista('servicios')}>
+            <span aria-hidden="true">🐕</span> La Reserva
+          </button>
+          <nav aria-label="Principal">
+            <button type="button" className={vista === 'servicios' ? 'activo' : ''} onClick={() => setVista('servicios')}>
+              Servicios
+            </button>
+            <button type="button" className={vista === 'reservar' ? 'activo' : ''} onClick={() => empezarReserva()}>
+              Reservar
+            </button>
+            <button type="button" className={vista === 'mis-reservas' ? 'activo' : ''} onClick={() => setVista('mis-reservas')}>
+              Mis reservas{reservas.length > 0 ? ` (${reservas.length})` : ''}
+            </button>
+          </nav>
+        </div>
+      </header>
 
-      <h2>Mis reservas</h2>
-      {cargando && <p>Cargando reservas...</p>}
-      {error && <p>Error al leer: {error.message}</p>}
-      <ul>
-        {reservas.map((r) => (
-          <li key={r.id}>
-            {r.servicio} · {r.perro} · {r.fecha} · <b>{r.estado}</b>
-            {r.estado === 'pendiente' && (
-              <button onClick={() => accion(() => cambiarEstado(r.id, 'cancelada'))}>Cancelar</button>
-            )}
-            <button onClick={() => accion(() => eliminarReserva(r.id))}>Eliminar</button>
-          </li>
-        ))}
-      </ul>
-    </main>
+      <main className="contenedor">
+        {vista === 'servicios' && <ServiciosVista onReservar={empezarReserva} />}
+        {vista === 'reservar' && (
+          <ReservaWizard
+            key={intento}
+            uid={uid}
+            servicioInicial={servicioElegido}
+            notificar={notificar}
+            onCreada={() => setVista('mis-reservas')}
+          />
+        )}
+        {vista === 'mis-reservas' && (
+          <MisReservas
+            reservas={reservas}
+            cargando={cargando}
+            error={error}
+            notificar={notificar}
+            onNueva={() => empezarReserva()}
+          />
+        )}
+      </main>
+
+      <footer className="pie">
+        <div className="contenedor">La Reserva · Guardería, hospedaje y colonia canina · Quilmes</div>
+      </footer>
+
+      <Aviso aviso={aviso} onCerrar={() => setAviso(null)} />
+    </>
   )
 }

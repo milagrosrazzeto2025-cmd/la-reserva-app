@@ -1,18 +1,126 @@
-/* V1: estilos mínimos, solo para comprobar que todo funciona */
+/* V2: estilos funcionales y neutros. Todavía sin identidad visual de La Reserva. */
+* { box-sizing: border-box; }
+
 body {
-  font-family: sans-serif;
   margin: 0;
-  padding: 1rem;
+  font-family: system-ui, sans-serif;
+  background: #f4f4f4;
+  color: #222;
+  line-height: 1.5;
 }
-main {
-  max-width: 640px;
-  margin: 0 auto;
+
+.contenedor { max-width: 760px; margin: 0 auto; padding: 1rem; }
+
+/* Cabecera */
+.cabecera { background: #fff; border-bottom: 1px solid #ddd; }
+.cabecera-interior { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem; }
+.marca { background: none; border: 0; font-size: 1.2rem; font-weight: 700; cursor: pointer; }
+nav { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+nav button { background: none; border: 0; padding: 0.5rem 0.75rem; cursor: pointer; border-radius: 6px; }
+nav button.activo { background: #e6e6e6; font-weight: 600; }
+
+h1 { font-size: 1.6rem; }
+h2 { font-size: 1.25rem; margin-top: 2rem; }
+h3 { margin: 0.25rem 0; }
+
+/* Tarjetas */
+.tarjeta { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; }
+.grilla-servicios, .grilla-incluye { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.etiqueta { font-size: 0.75rem; text-transform: uppercase; color: #666; }
+.requisitos li, .servicio-detalle li { margin-bottom: 0.25rem; }
+
+/* Botones */
+.btn { display: inline-block; padding: 0.55rem 1rem; border-radius: 6px; border: 1px solid #bbb; background: #fff; cursor: pointer; font-size: 1rem; }
+.btn-primario { background: #2f6f4f; border-color: #2f6f4f; color: #fff; }
+.btn-secundario { background: #eee; }
+.btn-ghost { border-color: transparent; background: transparent; text-decoration: underline; }
+.btn-peligro { background: #b3261e; border-color: #b3261e; color: #fff; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.botonera { display: flex; justify-content: space-between; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap; }
+.botonera-izq { justify-content: flex-start; align-items: center; }
+.confirmar { display: inline-flex; align-items: center; gap: 0.25rem; }
+
+/* Formularios */
+.campo { margin-bottom: 1rem; border: 0; padding: 0; min-width: 0; }
+.campo label, .campo legend, .etiqueta-falsa { display: block; font-weight: 600; margin-bottom: 0.25rem; padding: 0; }
+input:not([type='checkbox']):not([type='radio']):not([type='file']), textarea {
+  width: 100%; padding: 0.55rem; font: inherit; border: 1px solid #aaa; border-radius: 6px;
 }
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-li {
-  margin-bottom: 0.5rem;
-}
+.ayuda { display: block; color: #666; margin-bottom: 0.25rem; }
+.error { display: block; color: #b3261e; margin-top: 0.25rem; }
+.con-error input:not([type='radio']):not([type='checkbox']), .con-error textarea { border-color: #b3261e; }
+.opciones { display: grid; gap: 0.5rem; }
+.opcion { display: block; border: 1px solid #bbb; border-radius: 8px; padding: 0.6rem 0.8rem; cursor: pointer; background: #fff; font-weight: 400 !important; }
+.opcion.activa { border-color: #2f6f4f; background: #eaf4ee; }
+.opcion input { margin-right: 0.5rem; }
+.opcion-titulo { font-weight: 600; }
+.opcion small { display: block; color: #555; margin-left: 1.5rem; }
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.chip { border: 1px solid #bbb; border-radius: 999px; padding: 0.3rem 0.8rem; cursor: pointer; font-weight: 400 !important; margin: 0 !important; display: inline-block !important; }
+.chip.activa { background: #eaf4ee; border-color: #2f6f4f; }
+.chip input { position: absolute; opacity: 0; pointer-events: none; }
+.check { display: flex; gap: 0.5rem; align-items: flex-start; margin: 1rem 0; }
+.subbloque { border-left: 3px solid #ddd; padding-left: 1rem; }
+
+/* Notas */
+.nota { font-size: 0.9rem; color: #555; }
+.nota-aviso { background: #fff6e0; padding: 0.6rem; border-radius: 6px; color: #5c4400; }
+.nota-info { background: #eef3fa; padding: 0.6rem 1rem; border-radius: 6px; }
+.nota-error { background: #fdecea; padding: 0.6rem; border-radius: 6px; color: #b3261e; }
+.dato-destacado { font-weight: 600; }
+
+/* Pasos */
+.pasos { list-style: none; display: flex; gap: 0.25rem; padding: 0; margin: 0 0 1rem; }
+.pasos li { flex: 1; text-align: center; font-size: 0.8rem; color: #888; }
+.paso-numero { display: inline-block; width: 1.8rem; height: 1.8rem; line-height: 1.8rem; border-radius: 50%; background: #ddd; color: #333; }
+.pasos .actual { color: #222; font-weight: 600; }
+.pasos .actual .paso-numero { background: #2f6f4f; color: #fff; }
+.pasos .hecho .paso-numero { background: #9fcdb4; }
+.paso-nombre { display: block; }
+
+/* Calendario */
+.calendario { max-width: 340px; border: 1px solid #ccc; border-radius: 8px; padding: 0.5rem; background: #fff; }
+.cal-cabecera { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+.cal-flecha { border: 0; background: #eee; width: 2.2rem; height: 2.2rem; border-radius: 6px; font-size: 1.2rem; cursor: pointer; }
+.cal-grilla { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; }
+.cal-dia-semana { font-size: 0.7rem; color: #777; }
+.dia { border: 0; background: #f4f4f4; aspect-ratio: 1; border-radius: 6px; cursor: pointer; font: inherit; }
+.dia:disabled { background: transparent; color: #bbb; cursor: not-allowed; }
+.dia.hoy { outline: 1px solid #2f6f4f; }
+.dia.en-rango { background: #cfe6d9; }
+.dia.seleccionado { background: #2f6f4f; color: #fff; }
+.cal-ayuda { font-size: 0.8rem; color: #666; margin: 0.5rem 0 0; }
+
+/* Documentos */
+.documento { border: 1px dashed #aaa; border-radius: 8px; padding: 0.8rem; margin-bottom: 1rem; }
+.documento.con-error { border-color: #b3261e; }
+.obligatorio { font-size: 0.75rem; color: #b3261e; }
+.opcional { font-size: 0.75rem; color: #777; }
+.archivo-input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.archivo-input:focus-visible + label { outline: 2px solid #2f6f4f; outline-offset: 2px; }
+.documento-listo { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+.documento-listo img { width: 64px; height: 64px; object-fit: cover; border-radius: 6px; }
+.pdf-icono { font-size: 2rem; }
+.documento-nombre { flex: 1; word-break: break-all; }
+
+/* Resumen y reservas */
+.resumen { margin: 0 0 1rem; }
+.fila { display: flex; gap: 0.75rem; padding: 0.35rem 0; border-bottom: 1px solid #eee; }
+.fila dt { flex: 0 0 110px; color: #666; }
+.fila dd { margin: 0; flex: 1; }
+.reserva-cabecera { display: flex; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+.estado { font-size: 0.8rem; padding: 0.15rem 0.6rem; border-radius: 999px; }
+.estado-pendiente { background: #fff1c7; }
+.estado-confirmada { background: #cfe9d8; }
+.estado-cancelada { background: #e6e6e6; }
+.vacio { text-align: center; }
+.estado-carga { color: #555; }
+
+/* Aviso */
+.aviso { position: fixed; left: 50%; bottom: 1rem; transform: translateX(-50%); width: min(92vw, 460px); display: flex; justify-content: space-between; gap: 1rem; padding: 0.8rem 1rem; border-radius: 8px; color: #fff; z-index: 10; }
+.aviso-exito { background: #2f6f4f; }
+.aviso-error { background: #b3261e; }
+.aviso button { background: none; border: 0; color: inherit; font-size: 1.3rem; cursor: pointer; }
+
+.pie { color: #666; font-size: 0.85rem; text-align: center; padding: 1rem; }
+code { background: #eee; padding: 0 0.25rem; border-radius: 4px; }
