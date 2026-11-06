@@ -4,7 +4,7 @@ import GrupoOpciones from '../GrupoOpciones'
 export default function PasoServicio({ datos, onElegir, errores }) {
   const opciones = SERVICIOS.map((s) => ({
     valor: s.id,
-    etiqueta: `${s.emoji} ${s.nombre}`,
+    etiqueta: s.nombre,
     detalle: s.resumen,
   }))
   return (

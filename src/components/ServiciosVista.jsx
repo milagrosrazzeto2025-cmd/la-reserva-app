@@ -1,36 +1,38 @@
 import { useState } from 'react'
 import { INCLUYE, REQUISITOS, SERVICIOS, dinero } from '../data/servicios'
+import PlanoReserva from './PlanoReserva'
 
-function TarjetaServicio({ servicio, onReservar }) {
+function FilaServicio({ servicio, onReservar }) {
   const [abierto, setAbierto] = useState(false)
+  const esPrimerPaso = servicio.id === 'adaptacion'
   return (
-    <article className="tarjeta servicio">
-      <span className="etiqueta">{servicio.etiqueta}</span>
-      <h3>
-        <span aria-hidden="true">{servicio.emoji}</span> {servicio.nombre}
-      </h3>
-      <p>{servicio.resumen}</p>
+    <article className={'servicio-fila' + (esPrimerPaso ? ' primer-paso' : '')}>
+      <div className="servicio-texto">
+        <h3>{servicio.nombre}</h3>
+        <p className="servicio-tipo">{servicio.etiqueta}</p>
+        <p>{servicio.resumen}</p>
 
-      {abierto && (
-        <div className="servicio-detalle">
-          <ul>
-            {servicio.detalle.map((t) => (
-              <li key={t}>{t}</li>
-            ))}
-          </ul>
-          {servicio.modalidades && (
-            <ul className="precios">
-              {servicio.modalidades.map((m) => (
-                <li key={m.id}>
-                  <strong>{m.nombre}:</strong> {dinero(m.precio)}
-                </li>
+        {abierto && (
+          <div className="servicio-detalle">
+            <ul>
+              {servicio.detalle.map((t) => (
+                <li key={t}>{t}</li>
               ))}
             </ul>
-          )}
-        </div>
-      )}
+            {servicio.modalidades && (
+              <ul className="precios">
+                {servicio.modalidades.map((m) => (
+                  <li key={m.id}>
+                    <strong>{m.nombre}:</strong> {dinero(m.precio)}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
+      </div>
 
-      <div className="botonera botonera-izq">
+      <div className="servicio-acciones">
         <button type="button" className="btn btn-ghost" onClick={() => setAbierto(!abierto)} aria-expanded={abierto}>
           {abierto ? 'Ver menos' : 'Ver detalle'}
         </button>
@@ -45,49 +47,56 @@ function TarjetaServicio({ servicio, onReservar }) {
 export default function ServiciosVista({ onReservar }) {
   return (
     <>
-      <section className="intro">
-        <h1>Reservá el lugar de tu perro en La Reserva</h1>
-        <p>
-          Guardería, hospedaje y colonia canina en un ambiente familiar. Elegí el servicio, marcá las fechas en el
-          calendario y adjuntá la documentación: nosotros te confirmamos.
-        </p>
+      <section className="hero">
+        <div className="hero-texto">
+          <h1>Un patio de 300 m² y una casa abierta para tu perro</h1>
+          <p>
+            Guardería, hospedaje y colonia canina en Quilmes. Sin jaulas ni caniles: los perros comparten la casa con
+            Juli y Esteban. Elegí el servicio, marcá las fechas y subí la libreta sanitaria desde acá.
+          </p>
+          <div className="botonera botonera-izq">
+            <button type="button" className="btn btn-primario btn-grande" onClick={() => onReservar('')}>
+              Hacer una reserva
+            </button>
+            <a className="btn btn-ghost btn-grande" href="#servicios">
+              Ver servicios
+            </a>
+          </div>
+        </div>
+        <PlanoReserva />
       </section>
 
-      <section aria-labelledby="t-servicios">
+      <section id="servicios" aria-labelledby="t-servicios">
         <h2 id="t-servicios">Nuestros servicios</h2>
-        <div className="grilla-servicios">
+        <div className="menu-servicios">
           {SERVICIOS.map((s) => (
-            <TarjetaServicio key={s.id} servicio={s} onReservar={onReservar} />
+            <FilaServicio key={s.id} servicio={s} onReservar={onReservar} />
           ))}
         </div>
       </section>
 
       <section aria-labelledby="t-incluye">
         <h2 id="t-incluye">Qué incluyen todos los servicios</h2>
-        <div className="grilla-incluye">
+        <dl className="incluye-lista">
           {INCLUYE.map((i) => (
-            <div key={i.titulo} className="tarjeta incluye">
-              <span className="emoji" aria-hidden="true">{i.emoji}</span>
-              <strong>{i.titulo}</strong>
-              <p>{i.texto}</p>
+            <div key={i.titulo}>
+              <dt>{i.titulo}</dt>
+              <dd>{i.texto}</dd>
             </div>
           ))}
-        </div>
+        </dl>
       </section>
 
       <section aria-labelledby="t-requisitos">
-        <h2 id="t-requisitos">Requisitos de ingreso</h2>
-        <div className="tarjeta">
-          <ul className="requisitos">
-            {REQUISITOS.map((r) => (
-              <li key={r}>{r}</li>
-            ))}
-          </ul>
-          <p className="nota">
-            Todos los ingresos están sujetos a evaluación previa, compatibilidad con los demás huéspedes y
-            disponibilidad.
-          </p>
-        </div>
+        <h2 id="t-requisitos">Qué necesitamos para recibir a tu perro</h2>
+        <ul className="requisitos">
+          {REQUISITOS.map((r) => (
+            <li key={r}>{r}</li>
+          ))}
+        </ul>
+        <p className="nota">
+          Todos los ingresos se evalúan antes: miramos la compatibilidad con los demás huéspedes y la disponibilidad.
+        </p>
       </section>
     </>
   )

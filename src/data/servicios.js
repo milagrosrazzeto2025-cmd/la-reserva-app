@@ -4,7 +4,6 @@
 export const SERVICIOS = [
   {
     id: 'adaptacion',
-    emoji: '🐾',
     nombre: 'Jornada de adaptación',
     etiqueta: 'Primer paso obligatorio',
     resumen:
@@ -33,7 +32,6 @@ export const SERVICIOS = [
   },
   {
     id: 'guarderia',
-    emoji: '☀️',
     nombre: 'Guardería canina',
     etiqueta: 'Cuidado por el día',
     resumen:
@@ -47,7 +45,6 @@ export const SERVICIOS = [
   },
   {
     id: 'hospedaje',
-    emoji: '🌙',
     nombre: 'Hospedaje canino',
     etiqueta: 'Estadía de 24 horas',
     resumen:
@@ -61,7 +58,6 @@ export const SERVICIOS = [
   },
   {
     id: 'colonia',
-    emoji: '🎾',
     nombre: 'Colonia canina',
     etiqueta: 'Asistencia semanal',
     resumen:
@@ -78,11 +74,11 @@ export const SERVICIOS = [
 export const SERVICIO_POR_ID = Object.fromEntries(SERVICIOS.map((s) => [s.id, s]))
 
 export const INCLUYE = [
-  { emoji: '🩺', titulo: 'Asistencia veterinaria 24 h', texto: 'Disponible ante cualquier situación que requiera atención profesional.' },
-  { emoji: '🌿', titulo: 'Parque de 300 m²', texto: 'Espacio al aire libre para jugar, explorar y socializar con supervisión.' },
-  { emoji: '🏡', titulo: 'Casa familiar, sin jaulas', texto: 'Los huéspedes comparten los espacios interiores para descansar y dormir acompañados.' },
-  { emoji: '🚗', titulo: 'Traslados', texto: 'Búsqueda y regreso desde y hacia CABA y GBA Sur, sujeto a coordinación y disponibilidad.' },
-  { emoji: '📸', titulo: 'Fotos y videos', texto: 'Seguimiento diario con material de tu perro durante su estadía.' },
+  { titulo: 'Asistencia veterinaria 24 h', texto: 'Disponible ante cualquier situación que requiera atención profesional.' },
+  { titulo: 'Parque de 300 m²', texto: 'Espacio al aire libre para jugar, explorar y socializar con supervisión.' },
+  { titulo: 'Casa familiar, sin jaulas', texto: 'Los huéspedes comparten los espacios interiores para descansar y dormir acompañados.' },
+  { titulo: 'Traslados', texto: 'Búsqueda y regreso desde y hacia CABA y GBA Sur, sujeto a coordinación y disponibilidad.' },
+  { titulo: 'Fotos y videos', texto: 'Seguimiento diario con material de tu perro durante su estadía.' },
 ]
 
 export const REQUISITOS = [

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { SERVICIO_POR_ID, TAMANOS, ZONAS_TRASLADO } from '../data/servicios'
-import { actualizarReserva, cambiarEstado, eliminarReserva } from '../services/reservas'
+import { actualizarReserva, cambiarEstado, eliminarReserva, leerDocumentos } from '../services/reservas'
 import { mensajeDeError } from '../utils/errores'
 import { resumenFechas } from '../utils/fechas'
 import BotonConfirmar from './BotonConfirmar'
@@ -18,6 +18,8 @@ function TarjetaReserva({ reserva: r, notificar }) {
   const [ocupada, setOcupada] = useState(false)
   const [editando, setEditando] = useState(false)
   const [notas, setNotas] = useState(r.observaciones ?? '')
+  const [adjuntos, setAdjuntos] = useState(null)
+  const [cargandoAdjuntos, setCargandoAdjuntos] = useState(false)
 
   // Ejecuta una operación de Firebase mostrando éxito o error.
   async function ejecutar(operacion, mensajeOk) {
@@ -43,13 +45,25 @@ function TarjetaReserva({ reserva: r, notificar }) {
     if (ok) setEditando(false)
   }
 
+  // Los archivos pesan, por eso se descargan de Firestore solo cuando la persona los pide.
+  async function verDocumentos() {
+    setCargandoAdjuntos(true)
+    try {
+      setAdjuntos(await leerDocumentos(r.id))
+    } catch (err) {
+      notificar('error', mensajeDeError(err))
+    } finally {
+      setCargandoAdjuntos(false)
+    }
+  }
+
   const modificable = r.estado === 'pendiente'
 
   return (
     <article className="tarjeta reserva">
       <div className="reserva-cabecera">
         <h3>
-          <span aria-hidden="true">{servicio.emoji}</span> {servicio.nombre}
+          {servicio.nombre}
         </h3>
         <span className={'estado estado-' + r.estado}>{ESTADOS[r.estado]}</span>
       </div>
@@ -58,7 +72,7 @@ function TarjetaReserva({ reserva: r, notificar }) {
         <div className="fila">
           <dt>Perro</dt>
           <dd>
-            {r.perro.nombre} · {etiquetaDe(TAMANOS, r.perro.tamano)}
+            {r.perro.nombre}, {etiquetaDe(TAMANOS, r.perro.tamano).toLowerCase()}
           </dd>
         </div>
         <div className="fila">
@@ -69,13 +83,20 @@ function TarjetaReserva({ reserva: r, notificar }) {
           <div className="fila">
             <dt>Traslado</dt>
             <dd>
-              {etiquetaDe(ZONAS_TRASLADO, r.traslado.zona)} · {r.traslado.direccion}
+              {etiquetaDe(ZONAS_TRASLADO, r.traslado.zona)}, {r.traslado.direccion}
             </dd>
           </div>
         )}
         <div className="fila">
           <dt>Documentos</dt>
-          <dd>{r.documentos?.map((d) => d.nombre).join(', ') || '—'}</dd>
+          <dd>
+            {r.documentos?.map((d) => d.nombre).join(', ') || 'Sin documentos'}
+            {r.documentos?.length > 0 && !adjuntos && (
+              <button type="button" className="btn btn-ghost btn-chico" onClick={verDocumentos} disabled={cargandoAdjuntos}>
+                {cargandoAdjuntos ? 'Cargando…' : 'Ver archivos'}
+              </button>
+            )}
+          </dd>
         </div>
         {r.medicacion && (
           <div className="fila">
@@ -90,6 +111,23 @@ function TarjetaReserva({ reserva: r, notificar }) {
           </div>
         )}
       </dl>
+
+      {adjuntos && (
+        <ul className="adjuntos">
+          {adjuntos.map((d) => (
+            <li key={d.id}>
+              {d.mime.startsWith('image/') ? (
+                <img src={d.dataUrl} alt={`Vista previa de ${d.nombre}`} />
+              ) : (
+                <span className="pdf-icono">PDF</span>
+              )}
+              <a href={d.dataUrl} download={d.nombre}>
+                Descargar {d.nombre}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
 
       {editando && (
         <div className="campo">

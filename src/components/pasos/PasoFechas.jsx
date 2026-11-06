@@ -19,7 +19,7 @@ export default function PasoFechas({ datos, cambiar, errores }) {
   return (
     <div className="paso-contenido">
       <h3>
-        {servicio.emoji} {servicio.nombre}
+        {servicio.nombre}
       </h3>
 
       {datos.servicio === 'adaptacion' && (
@@ -90,7 +90,7 @@ export default function PasoFechas({ datos, cambiar, errores }) {
             <Calendario modo="rango" valor={datos.rango} onChange={(rango) => cambiar({ rango })} />
             {datos.rango.desde && datos.rango.hasta && (
               <p className="dato-destacado">
-                {nochesEntre(datos.rango.desde, datos.rango.hasta)} noche(s) de hospedaje
+                {nochesEntre(datos.rango.desde, datos.rango.hasta)} {nochesEntre(datos.rango.desde, datos.rango.hasta) === 1 ? 'noche' : 'noches'} de hospedaje
               </p>
             )}
           </>

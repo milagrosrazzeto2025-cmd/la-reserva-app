@@ -20,29 +20,38 @@ export default function PasoResumen({ reserva, documentos, acepta, onAceptar, er
   return (
     <div className="paso-contenido">
       <h3>Revisá tu solicitud</h3>
-      <dl className="resumen">
-        <Fila etiqueta="Servicio">
-          {servicio.emoji} {servicio.nombre}
-        </Fila>
-        <Fila etiqueta="Fechas">{resumenFechas(reserva)}</Fila>
-        {modalidad && <Fila etiqueta="Valor de la adaptación">{dinero(modalidad.precio)}</Fila>}
-        <Fila etiqueta="Perro">
-          {reserva.perro.nombre}
-          {reserva.perro.raza ? ` (${reserva.perro.raza})` : ''} · {etiquetaDe(TAMANOS, reserva.perro.tamano)} ·{' '}
-          {reserva.perro.castrado ? 'castrado' : 'sin castrar'}
-        </Fila>
-        <Fila etiqueta="Contacto">
-          {reserva.contacto.familia} · {reserva.contacto.telefono}
-        </Fila>
-        {reserva.medicacion && <Fila etiqueta="Medicación">{reserva.medicacion}</Fila>}
-        {reserva.observaciones && <Fila etiqueta="Observaciones">{reserva.observaciones}</Fila>}
-        <Fila etiqueta="Traslado">
-          {reserva.traslado.necesita
-            ? `${etiquetaDe(ZONAS_TRASLADO, reserva.traslado.zona)} · ${reserva.traslado.direccion}`
-            : 'No'}
-        </Fila>
-        <Fila etiqueta="Documentos">{documentos.map((d) => d.nombre).join(', ')}</Fila>
-      </dl>
+      {/* Se ve como una hoja de libreta sanitaria: es el documento que las familias ya conocen. */}
+      <div className="libreta">
+        <div className="libreta-tapa">
+          <span>Solicitud para</span>
+          <strong>{reserva.perro.nombre}</strong>
+        </div>
+        <dl className="resumen">
+          <Fila etiqueta="Servicio">{servicio.nombre}</Fila>
+          <Fila etiqueta="Fechas">{resumenFechas(reserva)}</Fila>
+          {modalidad && <Fila etiqueta="Valor">{dinero(modalidad.precio)}</Fila>}
+          <Fila etiqueta="Perro">
+            {[
+              reserva.perro.raza || null,
+              etiquetaDe(TAMANOS, reserva.perro.tamano).toLowerCase(),
+              reserva.perro.castrado ? 'castrado' : 'sin castrar',
+            ]
+              .filter(Boolean)
+              .join(', ')}
+          </Fila>
+          <Fila etiqueta="Contacto">
+            {reserva.contacto.familia}, {reserva.contacto.telefono}
+          </Fila>
+          {reserva.medicacion && <Fila etiqueta="Medicación">{reserva.medicacion}</Fila>}
+          {reserva.observaciones && <Fila etiqueta="Observaciones">{reserva.observaciones}</Fila>}
+          <Fila etiqueta="Traslado">
+            {reserva.traslado.necesita
+              ? `${etiquetaDe(ZONAS_TRASLADO, reserva.traslado.zona)}, ${reserva.traslado.direccion}`
+              : 'No'}
+          </Fila>
+          <Fila etiqueta="Documentos">{documentos.map((d) => d.nombre).join(', ')}</Fila>
+        </dl>
+      </div>
 
       <div className="nota nota-info">
         <strong>¿Qué pasa ahora?</strong>

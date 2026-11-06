@@ -106,12 +106,12 @@ export default function ReservaWizard({ uid, servicioInicial, onCreada, notifica
         <div className="botonera">
           {paso > 0 && (
             <button type="button" className="btn btn-ghost" onClick={() => irA(paso - 1)} disabled={enviando}>
-              ← Atrás
+              Atrás
             </button>
           )}
           {paso < PASOS.length - 1 ? (
             <button type="button" className="btn btn-primario" onClick={siguiente}>
-              Siguiente →
+              Siguiente
             </button>
           ) : (
             <button type="button" className="btn btn-primario" onClick={confirmar} disabled={enviando}>

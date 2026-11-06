@@ -71,7 +71,7 @@ export default function App() {
       <header className="cabecera">
         <div className="contenedor cabecera-interior">
           <button type="button" className="marca" onClick={() => setVista('servicios')}>
-            <span aria-hidden="true">🐕</span> La Reserva
+            <span className="marca-pelota" aria-hidden="true" /> La Reserva
           </button>
           <nav aria-label="Principal">
             <button type="button" className={vista === 'servicios' ? 'activo' : ''} onClick={() => setVista('servicios')}>
@@ -110,7 +110,7 @@ export default function App() {
       </main>
 
       <footer className="pie">
-        <div className="contenedor">La Reserva · Guardería, hospedaje y colonia canina · Quilmes</div>
+        <div className="contenedor">La Reserva, guardería, hospedaje y colonia canina en Quilmes</div>
       </footer>
 
       <Aviso aviso={aviso} onCerrar={() => setAviso(null)} />

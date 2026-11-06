@@ -69,6 +69,13 @@ export async function crearReserva(uid, datos, documentos) {
   return ref.id
 }
 
+// CONSULTAR (Read): trae los archivos adjuntos de una reserva (solo cuando se piden,
+// porque pesan: así la lista de reservas se carga rápido).
+export async function leerDocumentos(reservaId) {
+  const snap = await getDocs(documentosRef(reservaId))
+  return snap.docs.map((d) => ({ id: d.id, ...d.data() }))
+}
+
 // MODIFICAR (Update): cambia el estado (pendiente -> cancelada).
 export function cambiarEstado(id, estado) {
   return updateDoc(doc(db, 'reservas', id), { estado })

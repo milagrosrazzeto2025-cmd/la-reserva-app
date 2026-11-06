@@ -45,17 +45,17 @@ export function resumenFechas(r) {
   switch (r.servicio) {
     case 'guarderia': {
       const n = r.fechas.length
-      return `${n} ${n === 1 ? 'día' : 'días'}: ${r.fechas.map(formatearFecha).join(' · ')}`
+      return `${n} ${n === 1 ? 'día' : 'días'}: ${r.fechas.map(formatearFecha).join('; ')}`
     }
     case 'hospedaje': {
       const n = nochesEntre(r.fechaInicio, r.fechaFin)
-      return `Del ${formatearFecha(r.fechaInicio)} al ${formatearFecha(r.fechaFin)} · ${n} ${n === 1 ? 'noche' : 'noches'}`
+      return `Del ${formatearFecha(r.fechaInicio)} al ${formatearFecha(r.fechaFin)} (${n} ${n === 1 ? 'noche' : 'noches'})`
     }
     case 'colonia': {
       const dias = r.diasSemana.map((i) => DIAS_CORTOS[i]).join(', ')
-      return `Desde el ${formatearFecha(r.fechaInicio)} · ${r.frecuencia} ${r.frecuencia === 1 ? 'vez' : 'veces'} por semana (${dias})`
+      return `Desde el ${formatearFecha(r.fechaInicio)}, ${r.frecuencia} ${r.frecuencia === 1 ? 'vez' : 'veces'} por semana (${dias})`
     }
     default:
-      return `${formatearFecha(r.fechaInicio)} · ${r.modalidad === 'noche' ? 'con noche incluida' : 'diurna'}`
+      return `${formatearFecha(r.fechaInicio)}, ${r.modalidad === 'noche' ? 'con noche incluida' : 'diurna'}`
   }
 }
