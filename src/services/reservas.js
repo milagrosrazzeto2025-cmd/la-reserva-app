@@ -30,7 +30,10 @@ export function escucharReservas(uid, onData, onError) {
   return onSnapshot(
     q,
     (snap) => {
-      const lista = snap.docs.map((d) => ({ id: d.id, ...d.data() }))
+      const lista = snap.docs
+        .map((d) => ({ id: d.id, ...d.data() }))
+        // Ignora reservas viejas de pruebas con otro formato (por ejemplo, creadas con la v1).
+        .filter((r) => typeof r.perro === 'object' && r.traslado && r.contacto)
       // Ordenamos acá (y no en la consulta) para no necesitar un índice extra.
       lista.sort((a, b) => ms(b.creadoEn) - ms(a.creadoEn))
       onData(lista)
