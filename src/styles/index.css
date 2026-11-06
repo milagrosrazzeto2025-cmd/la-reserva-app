@@ -1,0 +1,18 @@
+/* V1: estilos mínimos, solo para comprobar que todo funciona */
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 1rem;
+}
+main {
+  max-width: 640px;
+  margin: 0 auto;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+li {
+  margin-bottom: 0.5rem;
+}

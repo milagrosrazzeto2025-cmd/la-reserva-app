@@ -1,0 +1,13 @@
+# Dependencias y build
+node_modules
+dist
+
+# Variables de entorno con los datos reales del proyecto de Firebase
+.env
+.env.local
+.env.*.local
+
+# Logs y archivos del sistema
+*.log
+.DS_Store
+.vercel

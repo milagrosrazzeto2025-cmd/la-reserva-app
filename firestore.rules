@@ -1,0 +1,13 @@
+rules_version = '2';
+
+// VERSIÓN 1: cada persona (identificada con login anónimo) solo puede
+// leer, crear, modificar y borrar SUS propias reservas.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /reservas/{reservaId} {
+      allow read: if request.auth != null && resource.data.uid == request.auth.uid;
+      allow create: if request.auth != null && request.resource.data.uid == request.auth.uid;
+      allow update, delete: if request.auth != null && resource.data.uid == request.auth.uid;
+    }
+  }
+}
