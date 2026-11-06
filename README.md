@@ -84,11 +84,29 @@ Las fotos se reducen automáticamente y los PDF pueden pesar hasta 650 KB.
 
 ## Versiones
 
-El historial de git marca las tres iteraciones del TP (`git checkout v1`, `v2`, `v3`):
+El historial de git marca las iteraciones del TP (`git checkout v1`, `v2`, `v3`, `v4`):
 
 - **v1**: versión funcional mínima (formulario simple y lista con cancelar y eliminar).
 - **v2**: servicios con su información, calendario, formulario por pasos, requisitos, adjuntos y validaciones.
-- **v3**: identidad visual, plano de La Reserva, resumen tipo libreta, visor de documentos y navegación pensada para celular.
+- **v3**: primer diseño propio (paleta propuesta por mí), plano de La Reserva, resumen tipo libreta, visor de documentos y navegación pensada para celular.
+- **v4** (final): rediseño con la identidad de marca real de La Reserva (paleta, tipografías y el arco como motivo).
+
+## Identidad visual
+
+Colores de la marca: oliva `#737150`, crema `#EDE7DD`, verde oscuro `#3C3F2A`, blanco y dorado `#CFA96A` (en `src/styles/index.css`).
+Tipografías de la marca: League Spartan (títulos) y Codec Pro (textos).
+
+Codec Pro no está en Google Fonts, así que la app usa **Outfit** como reemplazo parecido.
+Si tenés la licencia y los archivos de Codec Pro, copialos a `public/fonts/` y agregá un `@font-face` al principio de `src/styles/index.css`:
+
+```css
+@font-face {
+  font-family: 'Codec Pro';
+  src: url('/fonts/CodecPro-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+```
 
 ## Limitaciones conocidas
 

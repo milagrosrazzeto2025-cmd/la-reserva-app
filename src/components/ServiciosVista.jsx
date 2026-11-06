@@ -49,7 +49,7 @@ export default function ServiciosVista({ onReservar }) {
     <>
       <section className="hero">
         <div className="hero-texto">
-          <h1>Un patio de 300 m² y una casa abierta para tu perro</h1>
+          <h1>Un patio de 300 m² y una casa abierta para tu perro</h1>
           <p>
             Guardería, hospedaje y colonia canina en Quilmes. Sin jaulas ni caniles: los perros comparten la casa con
             Juli y Esteban. Elegí el servicio, marcá las fechas y subí la libreta sanitaria desde acá.

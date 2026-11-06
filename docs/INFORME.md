@@ -16,6 +16,8 @@ La app resuelve eso: la familia elige el servicio, marca las fechas en un calend
 
 **Público:** familias con perros que buscan cuidado para sus mascotas, la mayoría desde el celular. Por eso la interfaz prioriza el uso con el pulgar, textos claros y formularios cortos por pasos.
 
+**Identidad visual:** la interfaz usa la paleta (oliva, crema, verde oscuro, blanco y dorado) y las tipografías (League Spartan y Codec Pro) de la guía de marca de La Reserva. Del motivo de arcos de la guía salió un recurso propio: las ventanas del plano de la casa y la marca de la cabecera.
+
 **Decisiones tomadas a partir de la información del cliente:**
 
 - La adaptación es obligatoria antes de cualquier servicio, así que está en la app como un servicio más, marcado como "primer paso".

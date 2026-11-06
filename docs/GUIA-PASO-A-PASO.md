@@ -63,7 +63,7 @@ La consigna pide registrar las versiones y comprobar que un cambio en GitHub gen
 
 **Camino recomendado (simple):**
 
-1. Publicá la versión final (v3) como en la Parte 5.
+1. Publicá la versión final (v4, que es `main`) como en la Parte 5.
 2. Hacé un cambio chico y real (por ejemplo, un texto en `src/data/servicios.js`), después `git add -A`, `git commit -m "Ajusto texto"` y `git push`.
 3. En Vercel, mirá que arranque solo un nuevo despliegue, que el build termine bien y que el cambio se vea en la URL. Eso es lo que pide la consigna, anotalo en la bitácora.
 4. Para v1 y v2 mostrá capturas locales: `git checkout v1`, `npm run dev`, capturá y volvé con `git checkout main`. Para v1 y v2 usá las reglas de esa versión (`git show v1:firestore.rules`) y, al terminar, volvé a publicar las reglas finales. Borrá las reservas de prueba antes de seguir.

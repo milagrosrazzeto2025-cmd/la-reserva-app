@@ -71,7 +71,7 @@ export default function App() {
       <header className="cabecera">
         <div className="contenedor cabecera-interior">
           <button type="button" className="marca" onClick={() => setVista('servicios')}>
-            <span className="marca-pelota" aria-hidden="true" /> La Reserva
+            <span className="marca-arco" aria-hidden="true" /> La Reserva
           </button>
           <nav aria-label="Principal">
             <button type="button" className={vista === 'servicios' ? 'activo' : ''} onClick={() => setVista('servicios')}>

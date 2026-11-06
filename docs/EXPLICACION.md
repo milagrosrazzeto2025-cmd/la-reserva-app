@@ -13,7 +13,7 @@ Pensada para quien está empezando. Está ordenada como te la preguntaría un pr
 | Uso en computadora y celular | CSS adaptable, navegación inferior en celular |
 | Reglas de Firestore | `firestore.rules` |
 | GitHub, Vercel, README, `.env.example` | Incluidos; los pasos de publicación están en la guía |
-| Tres versiones | Etiquetas de git `v1`, `v2`, `v3` |
+| Tres versiones | Etiquetas de git `v1`, `v2`, `v3`, `v4` |
 | Originalidad y justificación del diseño | Ver `docs/BITACORA.md` |
 
 ## 2. Qué ajusté de tu idea y por qué
@@ -66,6 +66,8 @@ Archivos clave:
 
 ### Paso 4: v3, diseño y experiencia
 Seguí la consigna de que el diseño no sea "el primer resultado de una IA". Las decisiones y sus razones están en una tabla en `docs/BITACORA.md`. En resumen: partí del cliente (un patio de 300 m² con perros) y no de una plantilla. Revisé el resultado con capturas en computadora y celular y corregí detalles: las huellas del plano, el plural de "noches" y el trazo del progreso.
+
+Cuando me pasaste la **identidad de marca de La Reserva** (paleta y tipografías), rehíce el diseño con ella y lo guardé como **v4**. De la guía tomé los colores exactos (leyéndolos de tu imagen), las tipografías y el arco, que usé como motivo en el plano y en la marca de la cabecera. Codec Pro no está en Google Fonts: uso Outfit como reemplazo y el README explica cómo poner la original si tenés los archivos. Así el diseño pasó por dos rondas (propuesta propia y marca del cliente), que es justo lo que la consigna pide justificar.
 
 También agregué ver y descargar los documentos subidos, que lee la subcolección `documentos` solo cuando la persona lo pide (los archivos pesan).
 

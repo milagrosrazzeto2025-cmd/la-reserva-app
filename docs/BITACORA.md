@@ -1,6 +1,6 @@
 # Bitácora del proceso
 
-Cada versión está guardada como una etiqueta de git (`v1`, `v2`, `v3`). Los apartados marcados con **[COMPLETAR]** son los que solo vos podés llenar, porque dependen de lo que hagas y veas en tu computadora. No los inventes: anotá lo que realmente pasó.
+Cada versión está guardada como una etiqueta de git (`v1`, `v2`, `v3`, `v4`). Los apartados marcados con **[COMPLETAR]** son los que solo vos podés llenar, porque dependen de lo que hagas y veas en tu computadora. No los inventes: anotá lo que realmente pasó.
 
 ## Versión 1: primera versión funcional
 
@@ -54,7 +54,7 @@ Cada versión está guardada como una etiqueta de git (`v1`, `v2`, `v3`). Los ap
 
 **Capturas:** [COMPLETAR: calendario, formulario con errores, adjuntos]
 
-## Versión 3: versión final, diseño y experiencia de uso
+## Versión 3: primer diseño propio y experiencia de uso
 
 **Cómo se llegó al diseño**
 
@@ -83,6 +83,34 @@ El primer impulso fue un diseño crema con tipografía con serif y acento terrac
 
 **Capturas:** [COMPLETAR: inicio, calendario, resumen y mis reservas en celular y en computadora]
 
+## Versión 4: versión final con la identidad de marca de La Reserva
+
+**Qué pasó:** la v3 la diseñé con una paleta propuesta por mí (celeste, azul, verde y amarillo), porque todavía no tenía la identidad del cliente. Cuando llegó la guía de marca, el diseño se rehízo a partir de ella. Esa es una iteración real: pasar de una propuesta propia a la marca del cliente.
+
+**Qué se tomó de la identidad de marca**
+
+| Elemento de la marca | Cómo se usa en la app |
+| --- | --- |
+| Verde oscuro `#3C3F2A` | Color de textos, títulos y de lo seleccionado |
+| Oliva `#737150` | Botones principales y estados completados |
+| Dorado `#CFA96A` | Lo importante: la adaptación como primer paso, el paso actual, la galería del plano |
+| Crema `#EDE7DD` y fondo `#F7F6F1` | Fondos de la página y del plano; rango de fechas en el calendario |
+| League Spartan | Títulos y nombre de la marca |
+| Codec Pro | Textos. No está en Google Fonts: se usa Outfit como reemplazo parecido |
+| Muestras de color con forma de arco | Motivo propio: las ventanas del plano, la marca de la cabecera y el ícono de la pestaña |
+| Títulos de sección centrados entre líneas finas | Los títulos de sección de la app |
+
+**Decisiones**
+- El color de error es un rojo ladrillo aparte, porque la paleta de marca no tiene ningún color que se lea como alerta. Se verificó el contraste de los textos sobre cada fondo.
+- Se mantuvo lo que funcionaba de la v3: plano, filas de servicios, resumen tipo libreta y navegación inferior en celular.
+- Falta el logo en versión de archivo: en la cabecera hay un texto con el nombre y el arco, hasta tener el logo.
+
+**Pruebas realizadas** [COMPLETAR]
+- [ ] Revisar la app en el celular real con las tipografías cargadas
+- [ ] Mostrarle el diseño al cliente y anotar su opinión
+
+**Capturas:** [COMPLETAR: comparar inicio de la v3 y de la v4]
+
 ## Actualización y verificación en Vercel [COMPLETAR]
 
 La consigna pide comprobar que un cambio en GitHub genera un nuevo despliegue. Sugerencia: publicá la v1, después hacé `git push` de la v2 y de la v3, y anotá en cada caso:
@@ -92,6 +120,7 @@ La consigna pide comprobar que un cambio en GitHub genera un nuevo despliegue. S
 | v1 | | | | |
 | v2 | | | | |
 | v3 | | | | |
+| v4 | | | | |
 
 ## Dificultades generales y cómo se resolvieron [COMPLETAR]
 
