@@ -7,7 +7,7 @@ export const SERVICIOS = [
     nombre: 'Jornada de adaptación',
     etiqueta: 'Primer paso obligatorio',
     resumen:
-      'Antes de usar cualquier servicio, cada perro pasa una jornada para conocernos y ver cómo se desenvuelve en La Reserva.',
+      'Antes de usar cualquier servicio, cada perrito pasa una jornada para conocernos y ver cómo se desenvuelve en La Reserva.',
     detalle: [
       'Es obligatoria para todos los perros: pequeños, medianos y grandes.',
       'Observamos cómo se adapta al espacio, cómo se relaciona con otros huéspedes y cómo responde a nuestras rutinas.',
