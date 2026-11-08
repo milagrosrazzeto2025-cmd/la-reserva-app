@@ -28,7 +28,7 @@ export default function BotonConfirmar({ etiqueta, pregunta = '¿Seguro?', onCon
   }
 
   return (
-    <button type="button" className="btn btn-ghost" disabled={deshabilitado} onClick={() => setPreguntando(true)}>
+    <button type="button" className="btn btn-texto" disabled={deshabilitado} onClick={() => setPreguntando(true)}>
       {etiqueta}
     </button>
   )

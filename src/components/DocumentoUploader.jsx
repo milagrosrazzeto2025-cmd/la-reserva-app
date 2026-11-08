@@ -41,7 +41,7 @@ export default function DocumentoUploader({ id, etiqueta, ayuda, obligatorio, do
             <span className="pdf-icono" aria-hidden="true">📄</span>
           )}
           <span className="documento-nombre">{documento.nombre}</span>
-          <button type="button" className="btn btn-ghost" onClick={() => onChange(null)}>
+          <button type="button" className="btn btn-texto" onClick={() => onChange(null)}>
             Quitar
           </button>
         </div>

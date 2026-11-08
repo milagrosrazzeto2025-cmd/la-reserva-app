@@ -2,11 +2,23 @@ import { useState } from 'react'
 import { INCLUYE, REQUISITOS, SERVICIOS, dinero } from '../data/servicios'
 import PlanoReserva from './PlanoReserva'
 
+// Foto de cada servicio (están en public/fotos). Se asignan acá, y no en servicios.js,
+// para que los textos de los servicios se puedan editar sin tocar nada de imágenes.
+const FOTOS = {
+  adaptacion: { src: '/fotos/adaptacion.jpg', alt: 'Perro salchicha descansando bajo una manta en una cama mullida, con un labrador al fondo' },
+  guarderia: { src: '/fotos/guarderia.jpg', alt: 'Un labrador chocolate y un perro salchicha jugando en el pasto' },
+  hospedaje: { src: '/fotos/hospedaje.jpg', alt: 'Perro salchicha mirando a cámara sobre una manta, en el sillón de la casa' },
+  colonia: { src: '/fotos/colonia.jpg', alt: 'Dos perros salchicha corriendo y jugando en el parque' },
+}
+
 function FilaServicio({ servicio, onReservar }) {
   const [abierto, setAbierto] = useState(false)
   const esPrimerPaso = servicio.id === 'adaptacion'
+  const foto = FOTOS[servicio.id]
   return (
     <article className={'servicio-fila' + (esPrimerPaso ? ' primer-paso' : '')}>
+      {foto && <img className="servicio-foto" src={foto.src} alt={foto.alt} width="800" height="600" loading="lazy" />}
+
       <div className="servicio-texto">
         <h3>{servicio.nombre}</h3>
         <p className="servicio-tipo">{servicio.etiqueta}</p>
@@ -63,7 +75,15 @@ export default function ServiciosVista({ onReservar }) {
             </a>
           </div>
         </div>
-        <PlanoReserva />
+        <figure className="hero-foto">
+          <img
+            src="/fotos/hero.jpg"
+            alt="Un hombre acariciando a dos perros en el parque de La Reserva"
+            width="800"
+            height="1000"
+            fetchPriority="high"
+          />
+        </figure>
       </section>
 
       <section id="servicios" aria-labelledby="t-servicios">
@@ -77,14 +97,17 @@ export default function ServiciosVista({ onReservar }) {
 
       <section aria-labelledby="t-incluye">
         <h2 id="t-incluye">Qué incluyen todos los servicios</h2>
-        <dl className="incluye-lista">
-          {INCLUYE.map((i) => (
-            <div key={i.titulo}>
-              <dt>{i.titulo}</dt>
-              <dd>{i.texto}</dd>
-            </div>
-          ))}
-        </dl>
+        <div className="incluye">
+          <dl className="incluye-lista">
+            {INCLUYE.map((i) => (
+              <div key={i.titulo}>
+                <dt>{i.titulo}</dt>
+                <dd>{i.texto}</dd>
+              </div>
+            ))}
+          </dl>
+          <PlanoReserva />
+        </div>
       </section>
 
       <section aria-labelledby="t-requisitos">

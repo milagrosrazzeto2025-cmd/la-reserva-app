@@ -81,7 +81,8 @@ export default function App() {
               Reservar
             </button>
             <button type="button" className={vista === 'mis-reservas' ? 'activo' : ''} onClick={() => setVista('mis-reservas')}>
-              Mis reservas{reservas.length > 0 ? ` (${reservas.length})` : ''}
+              Mis reservas
+              {reservas.length > 0 && <span className="contador">{reservas.length}</span>}
             </button>
           </nav>
         </div>
@@ -110,7 +111,10 @@ export default function App() {
       </main>
 
       <footer className="pie">
-        <div className="contenedor">La Reserva, guardería, hospedaje y colonia canina en Quilmes</div>
+        <div className="contenedor pie-interior">
+          <img className="pie-logo" src="/logo.jpg" alt="" width="88" height="88" loading="lazy" />
+          <span>La Reserva, guardería, hospedaje y colonia canina en Quilmes</span>
+        </div>
       </footer>
 
       <Aviso aviso={aviso} onCerrar={() => setAviso(null)} />
