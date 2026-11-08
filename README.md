@@ -10,8 +10,8 @@ Aplicación web para que las familias de La Reserva (guardería, hospedaje y col
 Hecha con **React + Vite**, **Firebase** (Authentication anónima + Cloud Firestore) y publicada en **Vercel**.
 Trabajo Práctico 2 de Desarrollo Frontend II (UADE).
 
-- Aplicación publicada: _completar con la URL de Vercel_
-- Repositorio: _completar con la URL de GitHub_
+- Aplicación publicada: https://la-reserva-app-beta.vercel.app
+- Repositorio:https://github.com/milagrosrazzeto2025-cmd/la-reserva-app
 
 ## Cómo ejecutarla en tu computadora
 
