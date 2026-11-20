@@ -3,6 +3,8 @@ import { SERVICIO_POR_ID, TAMANOS, ZONAS_TRASLADO } from '../data/servicios'
 import { actualizarReserva, cambiarEstado, eliminarReserva, leerDocumentos } from '../services/reservas'
 import { mensajeDeError } from '../utils/errores'
 import { resumenFechas } from '../utils/fechas'
+import { urlGoogleCalendar } from '../utils/calendario'
+import ClimaReserva from './ClimaReserva'
 import BotonConfirmar from './BotonConfirmar'
 
 const ESTADOS = {
@@ -112,6 +114,20 @@ function TarjetaReserva({ reserva: r, notificar }) {
         )}
       </dl>
 
+              {r.estado !== 'cancelada' && r.fechaInicio && (
+        <div className="extras-reserva">
+          <ClimaReserva fecha={r.fechaInicio} />
+          <a
+            className="btn btn-ghost btn-chico"
+            href={urlGoogleCalendar(r, servicio.nombre)}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Agregar a Google Calendar
+          </a>
+        </div>
+      )}
+      
       {adjuntos && (
         <ul className="adjuntos">
           {adjuntos.map((d) => (
